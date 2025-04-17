@@ -1,0 +1,2 @@
+{:paths ["src/main/clojure" "src/test/clojure" "src/test_local/cljc"]
+ :deps {io.github.clojure/clr.test.check {:git/tag "v1.1.2"  :git/sha "26f34e6"}}}
