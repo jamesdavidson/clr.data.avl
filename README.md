@@ -1,3 +1,7 @@
+# Work in progress
+
+Note: work in progress porting to ClojureCLR (.NET 8). Does not pass test suite yet.
+
 # data.avl
 
 Persistent sorted maps and sets with support for the full clojure.core
