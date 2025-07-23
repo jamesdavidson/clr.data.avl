@@ -11,6 +11,11 @@ dotnet tool install --global clojure.cljr --version 0.1.0-alpha5
 cljr -A:dev
 ```
 
+Or
+```
+CLOJURE_LOAD_PATH=src/main/clojure:src/test/clojure:src/test_local/cljc dotnet run
+```
+
 # data.avl
 
 Persistent sorted maps and sets with support for the full clojure.core
