@@ -1,22 +1,22 @@
 (ns clojure.data.avl-check
   (:require [clojure.data.avl :as avl]
-            #?(:clj [collection-check.core
+            #?(:cljr [collection-check.core
                      :refer [assert-map-like assert-set-like
                              assert-equivalent-maps assert-equivalent-sets]])
-            #?(:cljs clojure.test.check)
+            #?(:cljrs clojure.test.check)
             [clojure.test.check.clojure-test
-             #?@(:clj [:refer [defspec]]
+             #?@(:cljr [:refer [defspec]]
                  :cljs [:refer-macros [defspec]])]
             [clojure.test.check.generators :as gen]
             [clojure.test.check.properties :as prop
-             #?@(:cljs [:include-macros true])])
-  (:use #?@(:clj [[clojure.template :only [do-template]]
+             #?@(:cljrs [:include-macros true])])
+  (:use #?@(:cljr [[clojure.template :only [do-template]]
                   clojure.test]
             :cljs [[cljs.test :only [deftest testing are]]])))
 
 (def igen gen/int)
 
-#?(:clj
+#?(:cljr
    (deftest collection-check
      (do-template [x] (assert-map-like x igen igen)
        (avl/sorted-map)
@@ -37,15 +37,15 @@
        (do
          (assert (== (count tree)
                      (peek (validate-tree
-                            #?(:clj (.comparator ^clojure.lang.Sorted tree)
+                            #?(:cljr (.comparator ^clojure.lang.Sorted tree)
                                :cljs (-comparator tree))
-                            (.getTree #?(:clj ^clojure.data.avl.IAVLTree tree
+                            (.getTree #?(:cljr ^clojure.data.avl.IAVLTree tree
                                          :cljs tree))))))
          true)
-       (validate-tree #?(:clj clojure.lang.RT/DEFAULT_COMPARATOR
+       (validate-tree #?(:cljr clojure.lang.RT/DefaultComparerInstance
                          :cljs compare)
                       tree)))
-  (#?(:clj [^java.util.Comparator comp ^clojure.data.avl.IAVLNode tree]
+  (#?(:cljr [^System.Collections.IComparer comp ^clojure.data.avl.IAVLNode tree]
       :cljs [comp tree])
      (if (nil? tree)
        [0 0]
@@ -55,14 +55,14 @@
              [rh rcnt] (validate-tree comp right)
              h         (inc (max lh rh))]
          (if left
-           (assert (neg? (#?(:clj .compare) comp
+           (assert (neg? (#?(:cljr .compare) comp
                           (.getKey left) (.getKey tree)))))
          (if right
-           (assert (neg? (#?(:clj .compare) comp
+           (assert (neg? (#?(:cljr .compare) comp
                           (.getKey tree) (.getKey right)))))
          (assert (#{-1 0 1} (- lh rh)))
-         (assert (== lh (#?(:clj #'avl/height :cljs avl/height) left)))
-         (assert (== rh (#?(:clj #'avl/height :cljs avl/height) right)))
+         (assert (== lh (#?(:cljr #'avl/height :cljs avl/height) left)))
+         (assert (== rh (#?(:cljr #'avl/height :cljs avl/height) right)))
          (assert (== lcnt (.getRank tree)))
          (assert (== h (.getHeight tree)))
          [h (inc (+ lcnt rcnt))]))))
@@ -76,7 +76,7 @@
         (validate-tree (reduce conj (avl/sorted-set) ks))
         (validate-tree (reduce conj (avl/sorted-set-by >) ks))
         true
-        (catch #?(:clj AssertionError :cljs :default) _
+        (catch #?(:cljr Exception :cljs :default) _
           false)))))
 
 (defspec avl-invariant-500 100
@@ -88,7 +88,7 @@
         (validate-tree (reduce conj (avl/sorted-set) ks))
         (validate-tree (reduce conj (avl/sorted-set-by >) ks))
         true
-        (catch #?(:clj AssertionError :cljs :default) _
+        (catch #?(:cljr Exception :cljs :default) _
             false)))))
 
 (defn disj!-all [coll ks]
@@ -109,10 +109,10 @@
         (validate-tree (disj-all (reduce conj (avl/sorted-set) ks) ks'))
         (validate-tree (disj-all (reduce conj (avl/sorted-set-by >) ks) ks'))
         true
-        (catch #?(:clj AssertionError :cljs :default) _
+        (catch #?(:cljr Exception :cljs :default) _
           false)))))
 
-#?(:clj
+#?(:cljr
    (defspec print-dup-map-round-trip 100
      (prop/for-all [xs (gen/vector gen/int)]
        (let [m1 (into (avl/sorted-map) (map #(vector % %) xs))
@@ -120,10 +120,10 @@
          (try
            (assert-equivalent-maps m1 m2)
            true
-           (catch AssertionError _
+           (catch Exception _
              false))))))
 
-#?(:clj
+#?(:cljr
    (defspec print-dup-set-round-trip 100
      (prop/for-all [xs (gen/vector gen/int)]
        (let [s1 (into (avl/sorted-set) xs)
@@ -131,7 +131,7 @@
          (try
            (assert-equivalent-sets s1 s2)
            true
-           (catch AssertionError _
+           (catch Exception _
              false))))))
 
 (defspec reduce-set 100
@@ -178,7 +178,7 @@
       (try
         (assert-equivalent-sets sub1 sub2)
         true
-        (catch #?(:clj AssertionError :cljs :default) _
+        (catch #?(:cljr Exception :cljs :default) _
           false)))))
 
 (defspec subrange-high-reduce 100
@@ -195,7 +195,7 @@
       (try
         (assert-equivalent-sets sub1 sub2)
         true
-        (catch #?(:clj AssertionError :cljs :default) _
+        (catch #?(:cljr Exception :cljs :default) _
           false)))))
 
 (defspec subrange-low-high-reduce 100
@@ -215,5 +215,9 @@
       (try
         (assert-equivalent-sets sub1 sub2)
         true
-        (catch #?(:clj AssertionError :cljs :default) _
+        (catch #?(:cljr Exception :cljs :default) _
           false)))))
+
+(comment
+(load-file "src/test_local/cljc/clojure/data/avl_check.cljc")
+ )
