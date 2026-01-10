@@ -1,5 +1,2 @@
 {:paths ["src/main/clojure" "src/test/clojure" "src/test_local/cljc"]
- :deps {io.github.clojure/clr.test.check {:git/tag "v1.1.2"  :git/sha "26f34e6"}}
- :aliases {:dev {:main-opts ["--init" "src/dev/user.cljr" "--repl"]
-                 ;:extra-paths ["src/dev"]
-                 :extra-deps {io.github.clojure/clr.tools.nrepl {:git/tag "v0.1.2-alpha2" :git/sha "a58009f"}}}}}
+ :deps {io.github.clojure/clr.test.check {:git/tag "v1.1.2"  :git/sha "26f34e6"}}}

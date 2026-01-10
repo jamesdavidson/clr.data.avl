@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageId>clojure.data.avl</PackageId>
+        <RootNamespace>clojure.data.avl</RootNamespace>
+        <Title>clojure.data.avl</Title>
+        <Product>clojure.data.avl</Product>
+        <AssemblyTitle>clojure.data.avl</AssemblyTitle>
+        <Authors>Michał Marczyk, Rich Hickey and contributors</Authors>
+        <Description>A port of the data.avl library to ClojureCLR</Description>
+        <Copyright>Copyright © 2026 Michał Marczyk, Rich Hickey and contributors</Copyright>
+        <PackageLicenseExpression>EPL-1.0</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/jamesdavidson/clr.data.avl</RepositoryUrl>
+        <Company>ClojureCLR contributors</Company>
+        <PackageTags>Clojure;ClojureCLR</PackageTags>
+        <Version>$(PublishVersion)</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Clojure" Version="1.6.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource
+                LogicalName="clojure.data.avl.cljr"
+                Include="src/main/clojure/clojure/data/avl.cljr"
+                CopyToOutputDirectory="Never"
+        />
+    </ItemGroup>
+
+</Project>

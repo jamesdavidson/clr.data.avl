@@ -12,3 +12,5 @@
 .\#*
 /out
 /.nrepl-port
+bin/
+obj/
