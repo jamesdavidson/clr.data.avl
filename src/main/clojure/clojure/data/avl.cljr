@@ -120,26 +120,26 @@
 
 (def ^:private never-equiv (Object.))
 
-;(defn ^:private equiv-map
-;  "Assumes x is a map. Returns true if y equals x, otherwise returns
-;  false."
-;  [^clojure.lang.IPersistentMap x y]
-;  (if-not (instance? java.util.Map y)
-;    false
-;    (if (and (instance? clojure.lang.IPersistentMap y)
-;             (not (instance? clojure.lang.MapEquivalence y)))
-;      false
-;      (let [m ^java.util.Map y]
-;        (if-not (== (.size ^java.util.Map x) (.size m))
-;          false
-;          (reduce-kv (fn [t k v]
-;                       (if-not (.containsKey m k)
-;                         (reduced false)
-;                         (if-not (Util/equiv v (.get m k))
-;                           (reduced false)
-;                           t)))
-;                     true
-;                     x))))))
+(defn ^:private equiv-map
+  "Assumes x is a map. Returns true if y equals x, otherwise returns
+  false."
+  [^clojure.lang.IPersistentMap x y]
+  (if-not (instance? System.Collections.IDictionary y)
+    false
+    (if (and (instance? clojure.lang.IPersistentMap y)
+             (not (instance? clojure.lang.MapEquivalence y)))
+      false
+      (let [m ^System.Collections.IDictionary y]
+        (if-not (== (.Count ^System.Collections.IDictionary x) (.Count m))
+          false
+          (reduce-kv (fn [t k v]
+                       (if-not (.Contains m k)
+                         (reduced false)
+                         (if-not (Util/equiv v (.get_Item m k))
+                           (reduced false)
+                           t)))
+                     true
+                     x))))))
 
 (gen-interface
  :name clojure.data.avl.IAVLNode
@@ -1395,8 +1395,8 @@
   (empty [this]
     (AVLMap. comp nil 0 _meta empty-map-hashcode empty-map-hasheq))
 
-;  (equiv [this that]
-;    (equiv-map this that))
+  (equiv [this that]
+    (equiv-map this that))
 
   clojure.lang.IFn
   (invoke [this k]
@@ -1566,6 +1566,11 @@
 ;
 ;  (values [this]
 ;    (vals this))
+  System.Collections.IDictionary
+  (Contains [this v]
+    (.. this values (contains v)))
+  (get_Item [this k]
+    (.valAt this k))
 )
 
 (deftype AVLTransientMap [^AtomicInteger edit
