@@ -56,9 +56,9 @@
 (def ^:private ^:const empty-map-hashcode (.GetHashCode {}))
 (def ^:private ^:const empty-map-hasheq   (hash {}))
 
-;(defn ^:private hash-imap
-;  [^IPersistentMap m]
-;  (APersistentMap/mapHash m))
+(defn ^:private hash-imap
+  [^IPersistentMap m]
+  (APersistentMap/mapHasheq m))
 
 (defn ^:private hasheq-imap
   [^IPersistentMap m]
@@ -1343,8 +1343,8 @@
   (ToString [this]
     (RT/printString this))
 
-;  (GetHashCode [this]
-;    (caching-hash this hash-imap _hash))
+  (GetHashCode [this]
+    (caching-hash this hash-imap _hash))
 
   (Equals [this that]
     (APersistentMap/mapEquals this that))
