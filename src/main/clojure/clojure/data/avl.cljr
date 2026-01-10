@@ -1571,6 +1571,8 @@
     (.. this values (contains v)))
   (get_Item [this k]
     (.valAt this k))
+  (get_Count [this]
+    cnt)
 )
 
 (deftype AVLTransientMap [^AtomicInteger edit
