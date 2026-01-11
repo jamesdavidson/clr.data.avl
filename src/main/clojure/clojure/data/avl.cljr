@@ -1535,9 +1535,9 @@
 
   ;java.io.Serializable
 
-;  System.Collections.IEnumerable
-;  (GetEnumerator [this]
-;    (SeqEnumerator. (seq this)))
+  System.Collections.IEnumerable
+  (^System.Collections.IEnumerator GetEnumerator [this]
+    (SeqEnumerator. (seq this)))
 
 ;  java.util.Map
 ;  (get [this k]
@@ -1567,8 +1567,9 @@
 ;  (values [this]
 ;    (vals this))
   System.Collections.IDictionary
-  (Contains [this v]
-    (.. this values (contains v)))
+  (Contains [this k]
+    (not (nil? (.entryAt this k))))
+
   (get_Item [this k]
     (.valAt this k))
   (get_Count [this]
@@ -1661,7 +1662,7 @@
     (RT/printString this))
 
   (GetHashCode [this]
-    (caching-hash this hash-iset _hash))
+    (caching-hash this hasheq-iset _hash))
 
   (Equals [this that]
     (APersistentSet/setEquals this that))
@@ -1825,6 +1826,14 @@
 ;
 ;  (^objects toArray [this ^objects a]
 ;    (RT/seqToPassedArray (seq this) a))
+
+  System.Collections.IEnumerable
+  (GetEnumerator [this]
+    (.GetEnumerator ^System.Collections.IEnumerable (keys avl-map)))
+
+  System.Collections.ICollection
+  (get_Count [this]
+    (count this))
     )
 
 (deftype AVLTransientSet

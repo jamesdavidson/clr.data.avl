@@ -51,8 +51,8 @@
                      (str (type a)) (str (type b)) a b)
         size (fn [x]
                (if (map? x)
-                 (.Size x)
-                 (.Size x)))]
+                 (.count x)
+                 (.get_Count x)))]
     (is (= (count a) (count b) (size a) (size b)) msg)
     (is (= a b) msg)
     (is (= b a) msg)
