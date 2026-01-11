@@ -58,7 +58,7 @@
 
 (defn ^:private hash-imap
   [^IPersistentMap m]
-  (APersistentMap/mapHasheq m))
+  (clojure.lang.Util/hasheq m))
 
 (defn ^:private hasheq-imap
   [^IPersistentMap m]
