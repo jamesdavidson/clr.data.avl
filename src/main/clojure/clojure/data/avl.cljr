@@ -541,8 +541,8 @@
     (long (.getHeight node))))
 
 (defn ^:private rotate-left ^IAVLNode [^IAVLNode node]
-  (let [l    (.getLeft  node)
-        r    (.getRight node)
+  (let [l    ^IAVLNode (.getLeft  node)
+        r    ^IAVLNode (.getRight node)
         rl   (.getLeft  r)
         rr   (.getRight r)
         lh   (height l)
@@ -583,8 +583,8 @@
     r))
 
 (defn ^:private rotate-right ^IAVLNode [^IAVLNode node]
-  (let [r    (.getRight node)
-        l    (.getLeft  node)
+  (let [r    ^IAVLNode (.getRight node)
+        l    ^IAVLNode (.getLeft  node)
         lr   (.getRight l)
         ll   (.getLeft  l)
         rh   (height r)
@@ -678,8 +678,8 @@
                       (inc (+ (.getRank node) r))))))))
 
 (defn ^:private maybe-rebalance ^IAVLNode [^IAVLNode node]
-  (let [l  (.getLeft node)
-        r  (.getRight node)
+  (let [l  ^IAVLNode (.getLeft node)
+        r  ^IAVLNode (.getRight node)
         lh (height l)
         rh (height r)
         b  (- lh rh)]
@@ -722,8 +722,8 @@
       node)))
 
 (defn ^:private maybe-rebalance! ^IAVLNode [edit ^IAVLNode node]
-  (let [l  (.getLeft node)
-        r  (.getRight node)
+  (let [l  ^IAVLNode (.getLeft node)
+        r  ^IAVLNode (.getRight node)
         lh (height l)
         rh (height r)
         b  (- lh rh)]
