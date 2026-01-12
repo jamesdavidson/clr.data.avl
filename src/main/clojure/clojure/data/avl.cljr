@@ -549,7 +549,7 @@
         rlh  (height rl)
         rrh  (height rr)
         rnk  (.getRank node)
-        rnkr (.getRank r)]
+        rnkr ^int (.getRank r)]
     (AVLNode. nil
               (.getKey r) (.getVal r)
               (AVLNode. nil
@@ -591,7 +591,7 @@
         lrh  (height lr)
         llh  (height ll)
         rnk  (.getRank node)
-        rnkl (.getRank l)]
+        rnkl ^int (.getRank l)]
     (AVLNode. nil
               (.getKey l) (.getVal l)
               ll
