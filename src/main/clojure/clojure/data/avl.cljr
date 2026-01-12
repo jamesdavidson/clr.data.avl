@@ -1829,7 +1829,9 @@
 
   System.Collections.IEnumerable
   (GetEnumerator [this]
-    (.GetEnumerator ^System.Collections.IEnumerable (keys avl-map)))
+    (let [empty-list (new System.Collections.ArrayList)
+          ks (or (keys avl-map) empty-list)]
+      (.GetEnumerator ^System.Collections.IEnumerable ks)))
 
   System.Collections.ICollection
   (get_Count [this]
