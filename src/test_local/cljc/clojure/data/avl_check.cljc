@@ -55,10 +55,10 @@
              [rh rcnt] (validate-tree comp right)
              h         (inc (max lh rh))]
          (if left
-           (assert (neg? (#?(:cljr .compare) comp
+           (assert (neg? (#?(:cljr .Compare) comp
                           (.getKey left) (.getKey tree)))))
          (if right
-           (assert (neg? (#?(:cljr .compare) comp
+           (assert (neg? (#?(:cljr .Compare) comp
                           (.getKey tree) (.getKey right)))))
          (assert (#{-1 0 1} (- lh rh)))
          (assert (== lh (#?(:cljr #'avl/height :cljs avl/height) left)))
